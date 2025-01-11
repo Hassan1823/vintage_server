@@ -1,22 +1,22 @@
-const express = require("express");
-const app = express();
-const PORT = 5000;
+// * lib imports
+import dotenv from "dotenv";
 
-app.get("/test", (req, res) => {
-  res.status(200).json("Welcome, your app is working well 🚀");
+// * local imports
+import { app } from "./app.js";
+import connectDB from "./db/index.js";
+
+// * config
+dotenv.config({
+  path: "./.env",
 });
 
-//* main route
-app.get("/", (req, res) => {
-  res.status(200).json("Vintage Server Is Running 🚀");
-});
-
-app.get("*", (req, res) => {
-  res.status(200).json("Invalid Route For Vintage LeftOver 😵❎");
-});
-
-app.listen(PORT, () => {
-  console.log(`🌐 Server running at PORT:${PORT}`);
-});
-
-module.exports = app;
+// * starting server
+connectDB()
+  .then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`⚙️  Server is running at PORT : ${process.env.PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("❌ MongoDB connection failed !!! ", err);
+  });
