@@ -2,8 +2,8 @@
 import dotenv from "dotenv";
 
 // * local imports
-import { app } from "./app.js";
 import connectDB from "./src/db/index.js";
+import { app } from "./app.js";
 
 // * config
 dotenv.config({

@@ -21,6 +21,12 @@ app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
+//* importing routes
+import productRouter from "./src/routes/products.routes.js";
+
+// * routes decelearation
+app.use("/api/products", productRouter);
+
 //* routes
 app.get("/", (req, res) => {
   res.status(200).json("Vintage Server Is Running 🚀");
