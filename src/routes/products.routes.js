@@ -1,13 +1,19 @@
 import { Router } from "express";
 
 // * local imports
-import { uploadProduct } from "../controllers/products.controller.js";
+import {
+  createProduct,
+  getAllProducts,
+} from "../controllers/products.controller.js";
 
 const router = Router();
 
 //! routes
 
 // * create product route
-router.route("/create").post(uploadProduct);
+router.route("/create").post(createProduct);
+
+// * get all products
+router.route("/getAll").get(getAllProducts);
 
 export default router;

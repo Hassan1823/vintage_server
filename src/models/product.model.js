@@ -3,21 +3,65 @@ import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const productSchema = new Schema(
   {
-    productName: {
+    name: {
       type: String,
       required: true,
     },
-    productDescription: {
+    category: {
       type: String,
       required: true,
     },
-    productPrice: {
+    tags: {
+      type: [String],
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    quantity: {
       type: Number,
       required: true,
     },
-    productDiscountedPrice: {
+    price: {
       type: Number,
       required: true,
+    },
+    discountedPrice: {
+      type: Number,
+      required: true,
+    },
+    images: {
+      type: [String],
+      required: true,
+    },
+    specs: {
+      type: [
+        {
+          colorImg: {
+            type: String,
+            required: true,
+          },
+          colorName: {
+            type: String,
+            required: true,
+          },
+          sizes: {
+            type: [String],
+            required: false,
+          },
+        },
+      ],
+      required: false,
+    },
+    // sizes: {
+    //   type: [String],
+    //   required: false,
+    // },
+    topRated: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   {

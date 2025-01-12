@@ -1,48 +1,97 @@
 // * imports
-import mongoose from "mongoose";
 
 // * local import
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
-import { asyncHandler } from "../utils/asyncHandler.js";
 import { Product } from "../models/product.model.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 
 // *uploading product
-const uploadProduct = asyncHandler(async (req, res) => {
+export const createProduct = asyncHandler(async (req, res) => {
   try {
     const {
-      productName,
-      productDescription,
-      productPrice,
-      productDiscountedPrice,
+      name,
+      description,
+      price,
+      discountedPrice,
+      quantity,
+      images,
+      category,
+      tags,
+      // colors,
+      // sizes,
+      specs,
     } = req.body;
 
     if (
-      !productName ||
-      !productDescription ||
-      !productPrice ||
-      !productDiscountedPrice
+      !name ||
+      !description ||
+      !price ||
+      !discountedPrice ||
+      !category ||
+      !quantity ||
+      !specs ||
+      !tags ||
+      // !colors ||
+      // !sizes ||
+      !images
     ) {
-      throw new ApiError(400, "All fields are required");
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
     }
 
     const productData = {
-      productName,
-      productDescription,
-      productPrice,
-      productDiscountedPrice,
+      name,
+      description,
+      price,
+      discountedPrice,
+      images,
+      quantity,
+      specs,
+      tags,
+      category,
+      // colors,
+      // sizes,
     };
 
-    const newProduct = await Product(productData);
-
+    const newProduct = await Product.create(productData);
     if (!newProduct) {
-      throw new ApiError(500, "Product not uploaded");
+      return res
+        .status(500)
+        .json({ success: false, message: "Error in creating product" });
     }
-    return new ApiResponse(200, "Product uploaded successfully", newProduct);
+
+    return res.status(200).json({
+      success: true,
+      message: "Product uploaded successfully",
+      product: newProduct,
+    });
   } catch (error) {
-    throw new ApiError(500, error?.message || "Internal Server Error");
+    console.log("🐱‍👤✨ ~ createProduct ~ error:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
   }
 });
 
-// * exporting
-export { uploadProduct };
+// * get all products
+export const getAllProducts = asyncHandler(async (req, res) => {
+  try {
+    const getAllProducts = await Product.find();
+    if (!getAllProducts) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Error in fetching products" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Products fetched successfully",
+      data: getAllProducts,
+    });
+  } catch (error) {
+    console.log("🐱‍👤✨ ~ getAllProducts ~ error:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
+});

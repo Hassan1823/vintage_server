@@ -2,6 +2,7 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 
 // * express
 const app = express();
@@ -20,12 +21,15 @@ app.use(express.json({ limit: "30mb" }));
 app.use(express.urlencoded({ extended: true, limit: "30mb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
+app.use(bodyParser.json());
 
 //* importing routes
-import productRouter from "./src/routes/products.routes.js";
+import productRoutes from "./src/routes/products.routes.js";
+import menuRoutes from "./src/routes/menu.routes.js";
 
 // * routes decelearation
-app.use("/api/products", productRouter);
+app.use("/api/product", productRoutes);
+app.use("/api/menu", menuRoutes);
 
 //* routes
 app.get("/", (req, res) => {
