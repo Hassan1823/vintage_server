@@ -8,7 +8,11 @@ import bodyParser from "body-parser";
 const app = express();
 
 // * cors
+// To allow all origins
 app.use(cors());
+
+// To disable CORS, you can comment out the cors middleware
+// app.use(cors());
 
 // app.use(
 //   cors({

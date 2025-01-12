@@ -4,6 +4,7 @@ import { Router } from "express";
 import {
   createProduct,
   getAllProducts,
+  updateProduct,
 } from "../controllers/products.controller.js";
 
 const router = Router();
@@ -12,6 +13,9 @@ const router = Router();
 
 // * create product route
 router.route("/create").post(createProduct);
+
+// * update product route
+router.route("/update/:id").post(updateProduct);
 
 // * get all products
 router.route("/getAll").get(getAllProducts);

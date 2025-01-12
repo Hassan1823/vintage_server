@@ -45,6 +45,42 @@ export const createMenu = asyncHandler(async (req, res) => {
   }
 });
 
+// * update menu
+export const updateMenu = asyncHandler(async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, link, subMenu } = req.body;
+
+    if (!id || !name || !link) {
+      return res
+        .status(400)
+        .json({ success: false, message: "All fields are required" });
+    }
+
+    const updatedMenu = await Menu.findByIdAndUpdate(
+      id,
+      { name, link, subMenu },
+      { new: true }
+    );
+
+    if (!updatedMenu) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Error in updating menu" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Menu updated successfully",
+      updatedMenu,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 //* get all menu
 export const getAllMenu = asyncHandler(async (req, res) => {
   try {
@@ -54,13 +90,11 @@ export const getAllMenu = asyncHandler(async (req, res) => {
         .status(400)
         .json({ success: false, message: "Error in fetching menu" });
     }
-    return res
-      .status(200)
-      .json({
-        success: true,
-        message: "Menu list fetched successfully",
-        data: allMenu,
-      });
+    return res.status(200).json({
+      success: true,
+      message: "Menu list fetched successfully",
+      data: allMenu,
+    });
   } catch (error) {
     return res
       .status(500)

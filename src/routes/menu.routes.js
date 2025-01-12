@@ -1,7 +1,11 @@
 import { Router } from "express";
 
 // * routes import
-import { createMenu, getAllMenu } from "../controllers/menu.controller.js";
+import {
+  createMenu,
+  getAllMenu,
+  updateMenu,
+} from "../controllers/menu.controller.js";
 
 const router = Router();
 
@@ -9,6 +13,9 @@ const router = Router();
 
 // * create menu route
 router.route("/create").post(createMenu);
+
+// * update menu route
+router.route("/update/:id").post(updateMenu);
 
 // * get all menu route
 router.route("/getAll").get(getAllMenu);
