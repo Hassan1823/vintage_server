@@ -1,2 +1,1 @@
-export const baseUrl =
-  "https://vintage-server-7jb9rhpad-hassanzaib223gmailcoms-projects.vercel.app";
+export const baseUrl = "https://vintage-server-3cma.vercel.app";
