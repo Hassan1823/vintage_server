@@ -16,8 +16,14 @@ const productSchema = new Schema(
       required: true,
     },
     description: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "Description",
       required: true,
+    },
+    size: {
+      type: Schema.Types.ObjectId,
+      ref: "Size",
+      required: false,
     },
     quantity: {
       type: Number,
@@ -54,10 +60,16 @@ const productSchema = new Schema(
       ],
       required: false,
     },
-    // sizes: {
-    //   type: [String],
-    //   required: false,
-    // },
+    review: {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+      required: false,
+    },
+    rating: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
     topRated: {
       type: Boolean,
       required: false,
